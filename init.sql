@@ -7,8 +7,8 @@ CREATE TABLE users (
     role ENUM('staff', 'admin') NOT NULL
 );
 
-INSERT INTO users (username, password, role) 
-VALUES ('admin', PASSWORD('admin123'), 'admin');
+INSERT INTO users (username, password, role)
+VALUES ('admin', SHA2('admin123', 256), 'admin');
 
 CREATE TABLE questionnaire (
     id INT AUTO_INCREMENT PRIMARY KEY,
