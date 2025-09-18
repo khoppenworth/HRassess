@@ -1,1 +1,3 @@
 <!-- Placeholder for submit_assessment.php -->
+
+<?php require_once 'config.php'; require_login(); $user_id = $_SESSION['user_id']; if ($_SERVER['REQUEST_METHOD'] === 'POST') { // Assume dynamic questions: fetch questions first $stmt = $pdo->query("SELECT id FROM questions"); $questions = $stmt->fetchAll(PDO::FETCH_ASSOC); $pdo->beginTransaction(); $ins = $pdo->prepare("INSERT INTO assessments (user_id, question_id, answer) VALUES (?, ?, ?)"); foreach ($questions as $q) { $qid = $q['id']; $ans = isset($_POST['q'.$qid]) ? trim($_POST['q'.$qid]) : ''; $ins->execute([$user_id, $qid, $ans]); } $pdo->commit(); header('Location: dashboard.php?submitted=1'); exit; } ?> 
