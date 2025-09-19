@@ -2,30 +2,27 @@
 declare(strict_types=1);
 session_start();
 
-define('DB_HOST','127.0.0.1');
-define('DB_NAME','epss');
-define('DB_USER','epss_user');   // set your MySQL user
-define('DB_PASS','epss_pass');   // set your MySQL password
+// Load env with defaults
+$DB_HOST = getenv('DB_HOST') ?: '127.0.0.1';
+$DB_NAME = getenv('DB_NAME') ?: 'hrassess';
+$DB_USER = getenv('DB_USER') ?: 'hr_user';
+$DB_PASS = getenv('DB_PASS') ?: 'hr_pass';
+$BASE_URL = getenv('BASE_URL') ?: 'http://localhost';
+
+define('BASE_URL', $BASE_URL);
+
+$options = [
+  PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+  PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+];
 
 try {
-    $pdo = new PDO(
-        "mysql:host=".DB_HOST.";dbname=".DB_NAME.";charset=utf8mb4",
-        DB_USER, DB_PASS,
-        [
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-        ]
-    );
+  $pdo = new PDO("mysql:host={$DB_HOST};dbname={$DB_NAME};charset=utf8mb4", $DB_USER, $DB_PASS, $options);
 } catch (PDOException $e) {
-    die("DB connection failed: " . $e->getMessage());
+  die("DB Connection failed.");
 }
 
-function auth_required(array $roles = []): void {
-    if (!isset($_SESSION['user_id'])) {
-        header('Location: /index.php'); exit;
-    }
-    if ($roles && (!isset($_SESSION['role']) || !in_array($_SESSION['role'], $roles, true))) {
-        http_response_code(403); echo "Forbidden"; exit;
-    }
-}
+require_once __DIR__ . '/lib/auth.php';
+require_once __DIR__ . '/lib/security.php';
+require_once __DIR__ . '/lib/i18n.php';
 ?>

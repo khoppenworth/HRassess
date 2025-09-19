@@ -1,0 +1,15 @@
+{
+  "app_title": "HRassess",
+  "login": "Connexion",
+  "logout": "D\u00e9connexion",
+  "username": "Nom d'utilisateur",
+  "password": "Mot de passe",
+  "dashboard": "Tableau de bord",
+  "admin": "Admin",
+  "users": "Utilisateurs",
+  "questionnaires": "Questionnaires",
+  "import_xml": "Importer XML",
+  "submit": "Soumettre",
+  "upload": "T\u00e9l\u00e9verser",
+  "import_success": "Questionnaire import\u00e9 avec succ\u00e8s."
+}
