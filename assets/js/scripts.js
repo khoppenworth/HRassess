@@ -1,1 +1,1 @@
-console.log('EPSS loaded');
+console.log('EPSS app loaded with i18n');
