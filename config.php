@@ -1,19 +1,16 @@
 <?php
-$host = 'localhost';
-$db   = 'epss_db';
-$user = 'epss_user';
-$pass = 'your_password_here';
-$charset = 'utf8mb4';
-
-$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
-$options = [
-    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    PDO::ATTR_EMULATE_PREPARES   => false,
-];
+declare(strict_types=1);
+session_start();
+define('DB_HOST','127.0.0.1');
+define('DB_NAME','epss');
+define('DB_USER','epss_user');
+define('DB_PASS','epss_pass');
 try {
-    $pdo = new PDO($dsn, $user, $pass, $options);
+    $pdo = new PDO("mysql:host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PASS, [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+    ]);
 } catch (PDOException $e) {
-    throw new PDOException($e->getMessage(), (int)$e->getCode());
+    die("DB connection failed: " . $e->getMessage());
 }
 ?>

@@ -1,0 +1,1 @@
+<?php session_start();require_once __DIR__.'/../config.php';if(!isset($_SESSION['user_id'])||$_SESSION['role']!=='admin'){header('Location:../index.php');exit;} ?><!DOCTYPE html><html><body><h2>Questionnaire Items</h2></body></html>
