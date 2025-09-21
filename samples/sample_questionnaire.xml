@@ -1,0 +1,7 @@
+<Questionnaire>
+  <title>EPSS Sample FHIR Questionnaire (XML)</title>
+  <description>Demonstration questionnaire for import</description>
+  <item linkId="x1" type="text"><text>Site name</text></item>
+  <item linkId="x2" type="boolean"><text>Is cold chain operational?</text></item>
+  <item linkId="x3" type="textarea"><text>Notes</text></item>
+</Questionnaire>
