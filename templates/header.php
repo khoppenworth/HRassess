@@ -22,10 +22,9 @@ $t = load_lang($_SESSION['lang'] ?? 'en');
     </li>
   </ul>
   <ul class="navbar-nav ml-auto">
+    <li class="nav-item"><a class="nav-link" href="/profile.php"><i class="fas fa-user-circle"></i> <?= htmlspecialchars($t['profile']) ?></a></li>
     <li class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle" href="#" id="langMenu" data-toggle="dropdown">
-        🌐 <?= strtoupper($_SESSION['lang'] ?? 'EN') ?>
-      </a>
+      <a class="nav-link dropdown-toggle" href="#" id="langMenu" data-toggle="dropdown">🌐 <?= strtoupper($_SESSION['lang'] ?? 'EN') ?></a>
       <div class="dropdown-menu dropdown-menu-right">
         <a class="dropdown-item" href="/set_lang.php?lang=en">English</a>
         <a class="dropdown-item" href="/set_lang.php?lang=am">Amharic</a>

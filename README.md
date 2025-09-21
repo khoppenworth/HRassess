@@ -1,36 +1,27 @@
-# EPSS Self-Assessment (AdminLTE 3.2 + i18n + FHIR + Import + Approvals)
+# EPSS Self-Assessment (AdminLTE 3.2 + Sections + Approvals + Import + i18n)
 
-**Default Users**
-- Admin: `admin / admin123`
-- Supervisor: `super / super123`
+Features
+- AdminLTE 3.2 UI (drop `dist/` + `plugins/` into `assets/adminlte/`)
+- i18n: EN/AM/FR (`lang/*.json`)
+- Admin: create users, change roles, reset passwords
+- Admin: create questionnaires, **sections**, add/edit/delete items, import FHIR (JSON/XML), download XML template
+- Staff: submit assessments (grouped by sections), view history
+- Supervisor: approve/reject with comment
+- FHIR API: CapabilityStatement, Questionnaire (GET), QuestionnaireResponse (GET/POST)
+- CSRF + audit logs
 
-## Setup
-1. Import `init.sql` into MySQL
-2. Edit `config.php` with DB credentials
-3. Download AdminLTE **3.2** and copy `dist/` and `plugins/` into `assets/adminlte/`
-4. Ensure Apache serves this folder, HTTPS recommended
+Default accounts
+- admin / admin123
+- super / super123
 
-## i18n
-- Language switcher in navbar (EN/AM/FR)
-- Strings in `lang/*.json`
+Deploy
+1. Import `init.sql`
+2. Edit DB credentials in `config.php`
+3. Copy AdminLTE 3.2 assets into `assets/adminlte/`
+4. Visit `/index.php`
 
-## Admin Panel
-- Users: `/admin/users.php`
-- Manage Questionnaires (create, add items, **import FHIR JSON/XML**): `/admin/questionnaire_manage.php`
-- Supervisor Review (approve/reject): `/admin/supervisor_review.php`
-- Export CSV: `/admin/export.php`
-
-## Staff
-- Dashboard: `/dashboard.php`
-- Submit assessment: `/submit_assessment.php?qid=1`
-
-## FHIR Endpoints
-- CapabilityStatement: `/fhir/metadata.php`
-- Questionnaire (GET): `/fhir/Questionnaire.php?id=1` or list
-- QuestionnaireResponse (GET/POST): `/fhir/QuestionnaireResponse.php`
-
-### cURL Example (POST QuestionnaireResponse)
-```bash
+FHIR cURL example
+```
 curl -X POST "https://your-domain/fhir/QuestionnaireResponse.php"   -H "Content-Type: application/json"   -d '{
     "resourceType": "QuestionnaireResponse",
     "questionnaire": "1",
@@ -42,13 +33,3 @@ curl -X POST "https://your-domain/fhir/QuestionnaireResponse.php"   -H "Content-
     ]
   }'
 ```
-
-### Import a FHIR Questionnaire
-- JSON: use `samples/sample_questionnaire.json`
-- XML: use `samples/sample_questionnaire.xml`
-In Admin → *Manage Questionnaires* → *Import Questionnaire File (XML/JSON)*.
-
-## Notes
-- Responses enter `status=submitted` by default. Supervisors **approve** or **reject**.
-- CSV export includes status and review metadata.  
-- Connect MySQL to Looker Studio directly for reporting.

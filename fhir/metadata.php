@@ -5,7 +5,7 @@ json_response([
   "status" => "active",
   "date" => date('c'),
   "kind" => "instance",
-  "software" => ["name" => "EPSS Self-Assessment", "version" => "1.2.0"],
+  "software" => ["name" => "EPSS Self-Assessment", "version" => "1.4.0"],
   "format" => ["json"],
   "rest" => [[
     "mode" => "server",

@@ -1,0 +1,6 @@
+<Questionnaire xmlns="http://hl7.org/fhir">
+  <title>Sample Questionnaire</title>
+  <description>Replace with your description</description>
+  <item linkId="q1" type="boolean"><text>Do you have stock-outs?</text></item>
+  <item linkId="q2" type="text"><text>Which medicines are in shortage?</text></item>
+</Questionnaire>

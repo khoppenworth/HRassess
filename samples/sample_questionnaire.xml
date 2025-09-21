@@ -1,4 +1,4 @@
-<Questionnaire>
+<Questionnaire xmlns="http://hl7.org/fhir">
   <title>EPSS Sample FHIR Questionnaire (XML)</title>
   <description>Demonstration questionnaire for import</description>
   <item linkId="x1" type="text"><text>Site name</text></item>

@@ -5,30 +5,35 @@ auth_required(['supervisor','admin']);
 $t = load_lang($_SESSION['lang'] ?? 'en');
 
 $msg = '';
+if ($_SERVER['REQUEST_METHOD']==='POST') { csrf_check(); }
 if ($_SERVER['REQUEST_METHOD']==='POST' && isset($_POST['response_id'], $_POST['action'])) {
   $rid = (int)$_POST['response_id'];
   if ($_POST['action'] === 'approve') {
     $stmt = $pdo->prepare("UPDATE questionnaire_response SET status='approved', reviewed_by=?, reviewed_at=NOW(), review_comment=? WHERE id=?");
     $stmt->execute([$_SESSION['user_id'], $_POST['review_comment'] ?? null, $rid]);
+    log_action($pdo, (int)$_SESSION['user_id'], 'response_approve', ['response_id'=>$rid]);
     $msg = 'Approved.';
   } elseif ($_POST['action'] === 'reject') {
     $stmt = $pdo->prepare("UPDATE questionnaire_response SET status='rejected', reviewed_by=?, reviewed_at=NOW(), review_comment=? WHERE id=?");
     $stmt->execute([$_SESSION['user_id'], $_POST['review_comment'] ?? null, $rid]);
+    log_action($pdo, (int)$_SESSION['user_id'], 'response_reject', ['response_id'=>$rid]);
     $msg = 'Rejected.';
   }
 }
 
-// Pending
-$pending = $pdo->query("
-  SELECT r.id, r.created_at, u.username, q.title
-  FROM questionnaire_response r
-  JOIN users u ON u.id = r.user_id
-  JOIN questionnaire q ON q.id = r.questionnaire_id
-  WHERE r.status='submitted'
-  ORDER BY r.created_at ASC
-")->fetchAll();
+try {
+  $pending = $pdo->query("
+    SELECT r.id, r.created_at, u.username, q.title
+    FROM questionnaire_response r
+    JOIN users u ON u.id = r.user_id
+    JOIN questionnaire q ON q.id = r.questionnaire_id
+    WHERE r.status='submitted'
+    ORDER BY r.created_at ASC
+  ")->fetchAll();
+} catch (Exception $e) {
+  die("Database error in supervisor review: " . htmlspecialchars($e->getMessage()));
+}
 
-// Detail view
 $view = null; $items = [];
 if (isset($_GET['id'])) {
   $rid = (int)$_GET['id'];
@@ -82,6 +87,7 @@ include __DIR__ . '/../templates/header.php';
                 </div>
               <?php endforeach; ?>
               <form method="post" class="mt-3">
+                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(csrf_token()) ?>">
                 <input type="hidden" name="response_id" value="<?=$view['id']?>">
                 <div class="form-group">
                   <label><?= htmlspecialchars($t['review_comment']) ?></label>

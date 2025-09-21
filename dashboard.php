@@ -7,7 +7,7 @@ $t = load_lang($_SESSION['lang'] ?? 'en');
 $stmt = $pdo->query("SELECT id, title, description FROM questionnaire ORDER BY created_at DESC");
 $questionnaires = $stmt->fetchAll();
 
-$my = $pdo->prepare("SELECT r.id, q.title, r.created_at, r.status FROM questionnaire_response r JOIN questionnaire q ON q.id = r.questionnaire_id WHERE r.user_id = ? ORDER BY r.created_at DESC LIMIT 20");
+$my = $pdo->prepare("SELECT r.id, q.title, r.created_at, r.status, r.review_comment FROM questionnaire_response r JOIN questionnaire q ON q.id = r.questionnaire_id WHERE r.user_id = ? ORDER BY r.created_at DESC LIMIT 20");
 $my->execute([$_SESSION['user_id']]);
 $history = $my->fetchAll();
 
@@ -34,13 +34,14 @@ include __DIR__ . '/templates/header.php';
       <div class="card-header"><h3 class="card-title"><?= htmlspecialchars($t['submission_history']) ?></h3></div>
       <div class="card-body">
         <table class="table table-striped">
-          <thead><tr><th>ID</th><th><?= htmlspecialchars($t['questionnaires']) ?></th><th><?= htmlspecialchars($t['status']) ?></th><th>Date</th></tr></thead>
+          <thead><tr><th>ID</th><th><?= htmlspecialchars($t['questionnaires']) ?></th><th><?= htmlspecialchars($t['status']) ?></th><th>Comment</th><th>Date</th></tr></thead>
           <tbody>
             <?php foreach($history as $h): ?>
               <tr>
                 <td><?=$h['id']?></td>
                 <td><?=htmlspecialchars($h['title'])?></td>
                 <td><?=htmlspecialchars($t[$h['status']] ?? $h['status'])?></td>
+                <td><?=htmlspecialchars($h['review_comment'] ?? '')?></td>
                 <td><?=$h['created_at']?></td>
               </tr>
             <?php endforeach; ?>

@@ -4,10 +4,14 @@ require_once __DIR__ . '/../i18n.php';
 auth_required(['admin']);
 $t = load_lang($_SESSION['lang'] ?? 'en');
 
-$totalUsers = (int)$pdo->query("SELECT COUNT(*) FROM users")->fetchColumn();
-$totalQ = (int)$pdo->query("SELECT COUNT(*) FROM questionnaire")->fetchColumn();
-$totalResponses = (int)$pdo->query("SELECT COUNT(*) FROM questionnaire_response")->fetchColumn();
-$pending = (int)$pdo->query("SELECT COUNT(*) FROM questionnaire_response WHERE status='submitted'")->fetchColumn();
+try {
+  $totalUsers = (int)$pdo->query("SELECT COUNT(*) FROM users")->fetchColumn();
+  $totalQ = (int)$pdo->query("SELECT COUNT(*) FROM questionnaire")->fetchColumn();
+  $totalResponses = (int)$pdo->query("SELECT COUNT(*) FROM questionnaire_response")->fetchColumn();
+  $pending = (int)$pdo->query("SELECT COUNT(*) FROM questionnaire_response WHERE status='submitted'")->fetchColumn();
+} catch (Exception $e) {
+  die("Database error in dashboard: " . htmlspecialchars($e->getMessage()));
+}
 
 include __DIR__ . '/../templates/header.php';
 ?>

@@ -42,8 +42,20 @@
   "status": "Statut",
   "submitted": "Soumis",
   "approved": "Approuvé",
-  "rejected": "Rejeté",
+  "rejeté": "Rejeté",
   "import_questionnaire": "Importer un questionnaire (XML/JSON)",
   "import": "Importer",
-  "submission_history": "Historique de vos soumissions"
+  "submission_history": "Historique de vos soumissions",
+  "download_template": "Télécharger le modèle XML",
+  "sections": "Sections",
+  "add_section": "Ajouter une section",
+  "section_title": "Titre de section",
+  "order": "Ordre",
+  "actions": "Actions",
+  "edit": "Éditer",
+  "delete": "Supprimer",
+  "save": "Enregistrer",
+  "update": "Mettre à jour",
+  "profile": "Profil",
+  "new_password": "Nouveau mot de passe"
 }

@@ -45,5 +45,17 @@
   "rejected": "Rejected",
   "import_questionnaire": "Import Questionnaire File (XML/JSON)",
   "import": "Import",
-  "submission_history": "Your Submission History"
+  "submission_history": "Your Submission History",
+  "download_template": "Download XML Template",
+  "sections": "Sections",
+  "add_section": "Add Section",
+  "section_title": "Section Title",
+  "order": "Order",
+  "actions": "Actions",
+  "edit": "Edit",
+  "delete": "Delete",
+  "save": "Save",
+  "update": "Update",
+  "profile": "Profile",
+  "new_password": "New password"
 }

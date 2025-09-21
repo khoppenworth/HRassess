@@ -25,11 +25,16 @@ $stmt->execute([(int)$id]);
 $q = $stmt->fetch();
 if (!$q) json_response(["error"=>"Not found"],404);
 
-$it = $pdo->prepare("SELECT * FROM questionnaire_item WHERE questionnaire_id = ?");
-$it->execute([$q['id']]);
-$items = [];
-foreach ($it as $row) {
-  $items[] = ["linkId"=>$row["linkId"], "text"=>$row["text"], "type"=>$row["type"]];
+$items = $pdo->prepare("SELECT * FROM questionnaire_item WHERE questionnaire_id = ? ORDER BY order_index ASC, id ASC");
+$items->execute([$q['id']]);
+
+$sec = $pdo->prepare("SELECT * FROM questionnaire_section WHERE questionnaire_id = ? ORDER BY order_index ASC, id ASC");
+$sec->execute([$q['id']]);
+$sections = $sec->fetchAll();
+
+$it = [];
+foreach ($items as $row) {
+  $it[] = ["linkId"=>$row["linkId"], "text"=>$row["text"], "type"=>$row["type"], "section_id"=>$row["section_id"]];
 }
 
 json_response([
@@ -37,5 +42,6 @@ json_response([
   "id" => (string)$q["id"],
   "title"=>$q["title"],
   "description"=>$q["description"],
-  "item"=>$items
+  "item"=>$it,
+  "section"=>$sections
 ]);
