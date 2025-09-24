@@ -1,4 +1,20 @@
-<Questionnaire xmlns='http://hl7.org/fhir'>
- <title>Sample</title>
- <item linkId='q1' type='boolean'><text>Do you have stock-outs?</text></item>
+<?xml version="1.0" encoding="UTF-8"?>
+<Questionnaire xmlns="http://hl7.org/fhir">
+  <title>Sample FHIR Questionnaire</title>
+  <description>Demo importable questionnaire</description>
+  <item>
+    <linkId value="q1"/>
+    <text value="Understands SOPs?"/>
+    <type value="boolean"/>
+  </item>
+  <item>
+    <linkId value="q2"/>
+    <text value="List essential medicines"/>
+    <type value="text"/>
+  </item>
+  <item>
+    <linkId value="q3"/>
+    <text value="Describe one challenge"/>
+    <type value="textarea"/>
+  </item>
 </Questionnaire>

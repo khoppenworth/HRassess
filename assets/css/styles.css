@@ -1,1 +1,2 @@
-body{font-family:sans-serif;} .chart-container{height:300px;}
+/* minimal styles; AdminLTE assets must be placed under assets/adminlte/... */
+body{font-size:14px;}

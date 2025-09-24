@@ -1,6 +1,7 @@
-/vendor/
-/node_modules/
+/config.php
 /assets/adminlte/dist/
 /assets/adminlte/plugins/
-config.php
-*.log
+/vendor/
+/node_modules/
+/logs/
+/*.zip

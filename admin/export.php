@@ -1,10 +1,13 @@
 <?php
 require_once __DIR__.'/../config.php';
-auth_required(['admin','supervisor']);
-header('Content-Type:text/csv'); header('Content-Disposition: attachment;filename=export.csv');
-$out=fopen('php://output','w');
-fputcsv($out,['id','user','questionnaire','status','created_at']);
-$st=$pdo->query("SELECT qr.id,u.username,qr.questionnaire_id,qr.status,qr.created_at FROM questionnaire_response qr JOIN users u ON u.id=qr.user_id");
-while($r=$st->fetch()){ fputcsv($out,$r); }
+auth_required(['admin']);
+header('Content-Type: text/csv');
+header('Content-Disposition: attachment; filename="responses.csv"');
+$out = fopen('php://output', 'w');
+fputcsv($out, ['response_id','user','questionnaire_id','status','score','created_at']);
+$sql = "SELECT qr.id, u.username, qr.questionnaire_id, qr.status, qr.score, qr.created_at FROM questionnaire_response qr JOIN users u ON u.id=qr.user_id ORDER BY qr.id DESC";
+foreach ($pdo->query($sql) as $r) {
+  fputcsv($out, [$r['id'],$r['username'],$r['questionnaire_id'],$r['status'],$r['score'],$r['created_at']]);
+}
 fclose($out);
-?>
+exit;

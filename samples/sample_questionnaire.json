@@ -1,11 +1,22 @@
 {
   "resourceType": "Questionnaire",
-  "title": "Sample",
+  "title": "Sample FHIR Questionnaire",
+  "description": "Demo importable questionnaire",
   "item": [
     {
       "linkId": "q1",
-      "text": "Do you have stock outs?",
+      "text": "Understands SOPs?",
       "type": "boolean"
+    },
+    {
+      "linkId": "q2",
+      "text": "List essential medicines",
+      "type": "text"
+    },
+    {
+      "linkId": "q3",
+      "text": "Describe one challenge",
+      "type": "textarea"
     }
   ]
 }

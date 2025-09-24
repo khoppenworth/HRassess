@@ -1,1 +1,27 @@
-{"submit_assessment": "Submit Assessment", "performance": "Performance"}
+{
+  "please_sign_in": "Please sign in",
+  "invalid_login": "Invalid username or password",
+  "username": "Username",
+  "password": "Password",
+  "sign_in": "Sign In",
+  "logout": "Logout",
+  "dashboard": "Dashboard",
+  "submit_assessment": "Submit Assessment",
+  "performance": "Performance",
+  "profile": "Profile",
+  "review_queue": "Review Queue",
+  "admin": "Admin",
+  "welcome": "Welcome",
+  "dashboard_intro": "Use the menu to submit self-assessments, track performance, or administer the system.",
+  "select_questionnaire": "Select questionnaire",
+  "submit": "Submit",
+  "no_questionnaire": "No questionnaire found.",
+  "your_trend": "Your Score Trend",
+  "date": "Date",
+  "questionnaire": "Questionnaire",
+  "score": "Score",
+  "status": "Status",
+  "change_password": "Change Password",
+  "new_password": "New Password",
+  "save": "Save"
+}

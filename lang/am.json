@@ -1,1 +1,27 @@
-{"submit_assessment": "\u130d\u121d\u1308\u121b \u12a0\u1235\u1308\u1263", "performance": "\u12a0\u1348\u133b\u1338\u121d"}
+{
+  "please_sign_in": "እባክዎ ይግቡ",
+  "invalid_login": "ልክ ያልሆነ የመግቢያ መረጃ",
+  "username": "የተጠቃሚ ስም",
+  "password": "የይለፍ ቃል",
+  "sign_in": "ግባ",
+  "logout": "ውጣ",
+  "dashboard": "ዳሽቦርድ",
+  "submit_assessment": "ግምገማ አስገባ",
+  "performance": "አፈፃፀም",
+  "profile": "ፕሮፋይል",
+  "review_queue": "ክለሳ ዝርዝር",
+  "admin": "አስተዳዳሪ",
+  "welcome": "እንኳን ደህና መጡ",
+  "dashboard_intro": "ግምገማ ለማስገባት፣ አፈፃፀም ለመከታተል ወይም ስርዓቱን ለማስተዳደር ምናሌውን ይጠቀሙ።",
+  "select_questionnaire": "መመርመሪያ ይምረጡ",
+  "submit": "አስገባ",
+  "no_questionnaire": "መመርመሪያ አልተገኘም።",
+  "your_trend": "የእርስዎ ውጤት ትኩረት",
+  "date": "ቀን",
+  "questionnaire": "መመርመሪያ",
+  "score": "ነጥብ",
+  "status": "ሁኔታ",
+  "change_password": "የይለፍ ቃል ቀይር",
+  "new_password": "አዲስ የይለፍ ቃል",
+  "save": "አስቀምጥ"
+}

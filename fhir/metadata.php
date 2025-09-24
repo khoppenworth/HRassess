@@ -1,13 +1,14 @@
 <?php
-header('Content-Type: application/json');
+require_once __DIR__.'/utils.php';
 echo json_encode([
- 'resourceType'=>'CapabilityStatement',
- 'status'=>'active',
- 'date'=>date(DATE_ATOM),
- 'publisher'=>'EPSS',
- 'kind'=>'instance',
- 'fhirVersion'=>'4.0.1',
- 'format'=>['json'],
- 'rest'=>[['mode'=>'server','resource'=>[['type'=>'Questionnaire'],['type'=>'QuestionnaireResponse']]]]
+  "resourceType"=>"CapabilityStatement",
+  "status"=>"active",
+  "date"=>date('c'),
+  "fhirVersion"=>"4.0.1",
+  "format"=>["json"],
+  "rest"=>[["mode"=>"server","resource"=>[
+    ["type"=>"Questionnaire"],
+    ["type"=>"QuestionnaireResponse"]
+  ]]]
 ]);
 ?>
