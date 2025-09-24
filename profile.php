@@ -18,27 +18,24 @@ if ($_SERVER['REQUEST_METHOD']==='POST') {
 ?>
 <!doctype html><html><head>
 <meta charset="utf-8"><title><?=t($t,'profile','Profile')?></title>
-<link rel="stylesheet" href="assets/adminlte/dist/css/adminlte.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="assets/css/material.css">
 <link rel="stylesheet" href="assets/css/styles.css">
-</head><body class="hold-transition sidebar-mini"><div class="wrapper">
+</head><body class="md-bg">
 <?php include __DIR__.'/templates/header.php'; ?>
-<section class="content">
-  <div class="container-fluid">
-    <div class="card card-info">
-      <div class="card-header"><h3 class="card-title"><?=t($t,'change_password','Change Password')?></h3></div>
-      <div class="card-body">
-        <?php if ($msg): ?><div class="alert alert-success"><?=$msg?></div><?php endif; ?>
-        <form method="post">
-          <input type="hidden" name="csrf" value="<?=csrf_token()?>">
-          <div class="form-group">
-            <label><?=t($t,'new_password','New Password')?></label>
-            <input type="password" name="password" class="form-control" required minlength="6">
-          </div>
-          <button class="btn btn-primary"><?=t($t,'save','Save')?></button>
-        </form>
-      </div>
-    </div>
+<section class="md-section">
+  <div class="md-card md-elev-2">
+    <h2 class="md-card-title"><?=t($t,'change_password','Change Password')?></h2>
+    <?php if ($msg): ?><div class="md-alert"><?=$msg?></div><?php endif; ?>
+    <form method="post">
+      <input type="hidden" name="csrf" value="<?=csrf_token()?>">
+      <label class="md-field">
+        <span><?=t($t,'new_password','New Password')?></span>
+        <input type="password" name="password" required minlength="6">
+      </label>
+      <button class="md-button md-primary md-elev-2"><?=t($t,'save','Save')?></button>
+    </form>
   </div>
 </section>
 <?php include __DIR__.'/templates/footer.php'; ?>
-</div></body></html>
+</body></html>

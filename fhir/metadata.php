@@ -6,9 +6,6 @@ echo json_encode([
   "date"=>date('c'),
   "fhirVersion"=>"4.0.1",
   "format"=>["json"],
-  "rest"=>[["mode"=>"server","resource"=>[
-    ["type"=>"Questionnaire"],
-    ["type"=>"QuestionnaireResponse"]
-  ]]]
+  "rest"=>[["mode"=>"server","resource"=>[["type"=>"Questionnaire"],["type"=>"QuestionnaireResponse"]]]]
 ]);
 ?>

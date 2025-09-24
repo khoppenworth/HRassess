@@ -15,10 +15,8 @@ if ($_SERVER['REQUEST_METHOD']==='GET') {
       "item"=>array_map(function($it){ return ["linkId"=>$it['linkId'],"answer"=>json_decode($it['answer'], true)]; }, $items->fetchAll())
     ]];
   }
-  echo json_encode(bundle($entries));
-  exit;
+  echo json_encode(bundle($entries)); exit;
 }
-
 if ($_SERVER['REQUEST_METHOD']==='POST') {
   $data = json_decode(file_get_contents('php://input'), true);
   if (($data['resourceType'] ?? '')!=='QuestionnaireResponse') { http_response_code(400); echo json_encode(["error"=>"Invalid resourceType"]); exit; }
@@ -28,31 +26,38 @@ if ($_SERVER['REQUEST_METHOD']==='POST') {
 
   $pdo->beginTransaction();
   try {
-    $stmt = $pdo->prepare("INSERT INTO questionnaire_response (user_id, questionnaire_id, status, created_at) VALUES (?,?, 'submitted', NOW())");
-    $stmt->execute([$uid, $qid]);
+    $pdo->prepare("INSERT INTO questionnaire_response (user_id, questionnaire_id, status, created_at) VALUES (?,?, 'submitted', NOW())")->execute([$uid,$qid]);
     $rid = (int)$pdo->lastInsertId();
-    $score = 0;
+
+    // Calculate weighted score
+    $items_meta = $pdo->prepare("SELECT linkId, type, COALESCE(weight_percent,0) AS weight FROM questionnaire_item WHERE questionnaire_id=?");
+    $items_meta->execute([$qid]);
+    $meta = [];
+    foreach ($items_meta as $m) { $meta[$m['linkId']] = $m; }
+    $score_sum = 0; $weight_sum = 0;
+
     foreach (($data['item'] ?? []) as $it) {
-      $ans = json_encode($it['answer'] ?? []);
-      // crude scoring
-      foreach (($it['answer'] ?? []) as $a) {
-        if (isset($a['valueBoolean']) && $a['valueBoolean']===true) $score += 1;
-        if (isset($a['valueString']) && trim((string)$a['valueString'])!=='') $score += 1;
+      $lid = $it['linkId'] ?? '';
+      $ansArr = $it['answer'] ?? [];
+      $ans = json_encode($ansArr);
+      $pdo->prepare("INSERT INTO questionnaire_response_item (response_id, linkId, answer) VALUES (?,?,?)")->execute([$rid, $lid, $ans]);
+
+      $w = isset($meta[$lid]) ? (float)$meta[$lid]['weight'] : 0.0;
+      $weight_sum += $w;
+      // Scoring rule: true boolean OR non-empty string → full weight
+      foreach ($ansArr as $a) {
+        if (isset($a['valueBoolean']) && $a['valueBoolean']===true) { $score_sum += $w; break; }
+        if (isset($a['valueString']) && trim((string)$a['valueString'])!=='') { $score_sum += $w; break; }
       }
-      $ins = $pdo->prepare("INSERT INTO questionnaire_response_item (response_id, linkId, answer) VALUES (?,?,?)");
-      $ins->execute([$rid, $it['linkId'] ?? '', $ans]);
     }
-    $pdo->prepare("UPDATE questionnaire_response SET score=? WHERE id=?")->execute([$score, $rid]);
+    $pct = $weight_sum > 0 ? (int)round(($score_sum / $weight_sum) * 100) : null;
+    $pdo->prepare("UPDATE questionnaire_response SET score=? WHERE id=?")->execute([$pct, $rid]);
     $pdo->commit();
     echo json_encode(["id"=>$rid, "status"=>"created"]);
   } catch (Exception $e) {
-    $pdo->rollBack();
-    http_response_code(500);
-    echo json_encode(["error"=>$e->getMessage()]);
+    $pdo->rollBack(); http_response_code(500); echo json_encode(["error"=>$e->getMessage()]);
   }
   exit;
 }
-
-http_response_code(405);
-echo json_encode(["error"=>"Method not allowed"]);
+http_response_code(405); echo json_encode(["error"=>"Method not allowed"]);
 ?>

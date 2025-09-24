@@ -9,31 +9,28 @@ $rows = $stmt->fetchAll();
 ?>
 <!doctype html><html><head>
 <meta charset="utf-8"><title><?=t($t,'performance','Performance')?></title>
-<link rel="stylesheet" href="assets/adminlte/dist/css/adminlte.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="assets/css/material.css">
 <link rel="stylesheet" href="assets/css/styles.css">
-</head><body class="hold-transition sidebar-mini"><div class="wrapper">
+</head><body class="md-bg">
 <?php include __DIR__.'/templates/header.php'; ?>
-<section class="content">
-  <div class="container-fluid">
-    <div class="card card-success">
-      <div class="card-header"><h3 class="card-title"><?=t($t,'your_trend','Your Score Trend')?></h3></div>
-      <div class="card-body">
-        <table class="table table-sm">
-          <thead><tr><th><?=t($t,'date','Date')?></th><th><?=t($t,'questionnaire','Questionnaire')?></th><th><?=t($t,'score','Score')?></th><th><?=t($t,'status','Status')?></th></tr></thead>
-          <tbody>
-          <?php foreach ($rows as $r): ?>
-            <tr>
-              <td><?=htmlspecialchars($r['created_at'])?></td>
-              <td><?=htmlspecialchars($r['title'])?></td>
-              <td><?= (int)$r['score']?></td>
-              <td><?=htmlspecialchars($r['status'])?></td>
-            </tr>
-          <?php endforeach; ?>
-          </tbody>
-        </table>
-      </div>
-    </div>
+<section class="md-section">
+  <div class="md-card md-elev-2">
+    <h2 class="md-card-title"><?=t($t,'your_trend','Your Score Trend')?></h2>
+    <table class="md-table">
+      <thead><tr><th><?=t($t,'date','Date')?></th><th><?=t($t,'questionnaire','Questionnaire')?></th><th><?=t($t,'score','Score (%)')?></th><th><?=t($t,'status','Status')?></th></tr></thead>
+      <tbody>
+      <?php foreach ($rows as $r): ?>
+        <tr>
+          <td><?=htmlspecialchars($r['created_at'])?></td>
+          <td><?=htmlspecialchars($r['title'])?></td>
+          <td><?= is_null($r['score']) ? '-' : (int)$r['score']?></td>
+          <td><?=htmlspecialchars($r['status'])?></td>
+        </tr>
+      <?php endforeach; ?>
+      </tbody>
+    </table>
   </div>
 </section>
 <?php include __DIR__.'/templates/footer.php'; ?>
-</div></body></html>
+</body></html>

@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__.'/config.php';
 $t = load_lang($_SESSION['lang'] ?? 'en');
+$cfg = get_site_config($pdo);
 
 if ($_SERVER['REQUEST_METHOD']==='POST') {
     csrf_check();
@@ -16,41 +17,56 @@ if ($_SERVER['REQUEST_METHOD']==='POST') {
         $err = t($t,'invalid_login','Invalid username or password');
     }
 }
+$logo = $cfg['logo_path'] ? htmlspecialchars($cfg['logo_path']) : 'assets/img/epss-logo.svg';
+$site_name = htmlspecialchars($cfg['site_name'] ?? 'EPSS Self-Assessment');
+$landing_text = htmlspecialchars($cfg['landing_text'] ?? '');
+$address = htmlspecialchars($cfg['address'] ?? '');
+$contact = htmlspecialchars($cfg['contact'] ?? '');
 ?>
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>EPSS - Login</title>
-  <link rel="stylesheet" href="assets/adminlte/dist/css/adminlte.min.css">
+  <title><?=$site_name?></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="assets/css/material.css">
   <link rel="stylesheet" href="assets/css/styles.css">
 </head>
-<body class="hold-transition login-page">
-<div class="login-box">
-  <div class="login-logo"><b>EPSS</b> Self-Assessment</div>
-  <div class="card">
-    <div class="card-body login-card-body">
-      <p class="login-box-msg"><?=t($t,'please_sign_in','Please sign in')?></p>
-      <?php if (!empty($err)): ?><div class="alert alert-danger"><?=$err?></div><?php endif; ?>
-      <form method="post">
+<body class="md-bg">
+  <div class="md-container">
+    <div class="md-card md-elev-3 md-login">
+      <div class="md-card-media">
+        <img src="<?=$logo?>" alt="Logo" class="md-logo">
+        <h1 class="md-title"><?=$site_name?></h1>
+      </div>
+      <?php if ($landing_text): ?>
+        <p class="md-subtitle"><?=$landing_text?></p>
+      <?php else: ?>
+        <p class="md-subtitle"><?=t($t,'welcome_msg','Sign in to start your self-assessment and track your performance over time.')?></p>
+      <?php endif; ?>
+
+      <form method="post" class="md-form">
         <input type="hidden" name="csrf" value="<?=csrf_token()?>">
-        <div class="input-group mb-3">
-          <input name="username" class="form-control" placeholder="<?=t($t,'username','Username')?>" required>
-          <div class="input-group-append"><div class="input-group-text"><span class="fas fa-user"></span></div></div>
-        </div>
-        <div class="input-group mb-3">
-          <input type="password" name="password" class="form-control" placeholder="<?=t($t,'password','Password')?>" required>
-          <div class="input-group-append"><div class="input-group-text"><span class="fas fa-lock"></span></div></div>
-        </div>
-        <div class="row">
-          <div class="col-8">
-            <a href="set_lang.php?lang=en">EN</a> | <a href="set_lang.php?lang=am">AM</a> | <a href="set_lang.php?lang=fr">FR</a>
-          </div>
-          <div class="col-4"><button class="btn btn-primary btn-block"><?=t($t,'sign_in','Sign In')?></button></div>
-        </div>
+        <label class="md-field">
+          <span><?=t($t,'username','Username')?></span>
+          <input name="username" required>
+        </label>
+        <label class="md-field">
+          <span><?=t($t,'password','Password')?></span>
+          <input type="password" name="password" required>
+        </label>
+        <?php if (!empty($err)): ?><div class="md-alert"><?=$err?></div><?php endif; ?>
+        <button class="md-button md-primary md-elev-2"><?=t($t,'sign_in','Sign In')?></button>
       </form>
+
+      <div class="md-meta">
+        <?="{$address}" ? "<div class='md-small'><strong>Address: </strong>{$address}</div>" : ""?>
+        <?="{$contact}" ? "<div class='md-small'><strong>Contact: </strong>{$contact}</div>" : ""?>
+        <div class="md-small lang-switch">
+          <a href="set_lang.php?lang=en">EN</a> · <a href="set_lang.php?lang=am">AM</a> · <a href="set_lang.php?lang=fr">FR</a>
+        </div>
+      </div>
     </div>
   </div>
-</div>
 </body>
 </html>

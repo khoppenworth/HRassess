@@ -1,4 +1,4 @@
-</div>
-<footer class="main-footer small text-muted text-center">
-  EPSS Self-Assessment — AdminLTE 3.2 UI placeholders. Drop assets under /assets/adminlte/...
+</main>
+<footer class="md-footer">
+  <div class="md-small text-center">EPSS Self-Assessment — Material-inspired UI. Admin can update logo, site name, landing text, address, and contact.</div>
 </footer>
