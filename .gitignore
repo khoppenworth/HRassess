@@ -1,0 +1,7 @@
+/config.php
+/assets/adminlte/dist/
+/assets/adminlte/plugins/
+/vendor/
+/node_modules/
+/logs/
+/*.zip

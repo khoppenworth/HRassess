@@ -1,0 +1,22 @@
+{
+  "resourceType": "Questionnaire",
+  "title": "Sample FHIR Questionnaire",
+  "description": "Demo importable questionnaire",
+  "item": [
+    {
+      "linkId": "q1",
+      "text": "Understands SOPs?",
+      "type": "boolean"
+    },
+    {
+      "linkId": "q2",
+      "text": "List essential medicines",
+      "type": "text"
+    },
+    {
+      "linkId": "q3",
+      "text": "Describe one challenge",
+      "type": "textarea"
+    }
+  ]
+}
