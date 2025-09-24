@@ -1,0 +1,1 @@
+# EPSS Core App\nDeploy steps: import init.sql, adjust config.php, visit index.php.

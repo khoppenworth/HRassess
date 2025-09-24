@@ -1,0 +1,1 @@
+<?php require 'config.php';auth_required(); echo 'Dashboard for role: '.htmlspecialchars($_SESSION['role']); ?>

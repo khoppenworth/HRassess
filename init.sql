@@ -1,0 +1,5 @@
+CREATE DATABASE IF NOT EXISTS epss;
+USE epss;
+DROP TABLE IF EXISTS users;
+CREATE TABLE users(id INT AUTO_INCREMENT PRIMARY KEY,username VARCHAR(100),password VARCHAR(255),role VARCHAR(20));
+INSERT INTO users(username,password,role) VALUES('admin','$2y$10$Q9r1RrIkl8v1h3HgRAa3fO90oXc.2n8uF8f4Zp3s1k4v9GgfYZOGa','admin');

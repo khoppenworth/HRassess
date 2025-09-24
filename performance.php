@@ -1,0 +1,1 @@
+<?php require 'config.php';auth_required(['staff']); echo 'Performance trends placeholder'; ?>

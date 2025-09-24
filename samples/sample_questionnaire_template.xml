@@ -1,0 +1,4 @@
+<Questionnaire xmlns='http://hl7.org/fhir'>
+ <title>Sample</title>
+ <item linkId='q1' type='boolean'><text>Do you have stock-outs?</text></item>
+</Questionnaire>
