@@ -4,9 +4,9 @@ declare(strict_types=1);
 session_start();
 
 define('DB_HOST','127.0.0.1');
-define('DB_NAME','epss');
+define('DB_NAME','epss_v300');
 define('DB_USER','epss_user');
-define('DB_PASS','epss_pass');
+define('DB_PASS','StrongPassword123!');
 define('BASE_URL','/');
 
 $options = [
